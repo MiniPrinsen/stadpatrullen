@@ -14,7 +14,9 @@
     "set-default-browser": "^1.0.1"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0"
+    "babel-preset-expo": "^5.0.0",
+    "babel-preset-react-native": "^4.0.1",
+    "react-native-dotenv": "^0.2.0"
   },
   "private": true
 }
