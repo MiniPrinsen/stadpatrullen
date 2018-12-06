@@ -12,6 +12,18 @@ import { FIREBASE_REACT_NATIVE_API_KEY } from 'react-native-dotenv'
     messagingSenderId: "27796812779"
   };
 
+  function callExternalAPI() {
+    // import the module
+    // var request = require('request');
+
+    // // make the request
+    // request('put your external url here', function (error, response, body) {
+    //     if (!error && response.statusCode == 200) {
+    //     //here put what you want to do with the request
+    //     }
+    // })
+  }
+
   export default class Firebase {
       static auth;
       static init() {
