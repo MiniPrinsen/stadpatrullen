@@ -3,7 +3,7 @@ const functions = require('firebase-functions');
 
 
 /*exports.fetchSensortData = functions.https.onRequest((req, res) => {
-    let url = 'https://daresay.herokuapp.com/nv/plan/3/all?key=41938416368104621'
+    let url = ''
 
     return request(url)
         .then(data => cleanUp(data))
@@ -62,7 +62,7 @@ admin.initializeApp();
 // Realtime Database under the path /messages/:pushId/original
 exports.addMessage = functions.https.onRequest((req, res) => {
 
-    let url = 'https://daresay.herokuapp.com/nv/plan/3/all?key=41938416368104621'
+    let url = 'https:www.google.se'
     fetch(url);
   // Grab the text parameter.
   const original = req.query.text;
