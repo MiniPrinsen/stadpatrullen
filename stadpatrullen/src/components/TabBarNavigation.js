@@ -1,68 +1,24 @@
 import React from 'react';
-import { Button, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import plan3 from "../screens/Plan3Screen";
+import plan4 from "../screens/Plan4Screen";
+import details from "../screens/DetailScreen";
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
-class HomeScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Plan 3!</Text>
-        {/* <Button
-          title="Go to Plan 4"
-          onPress={() => this.props.navigation.navigate('Plan 4')}
-        />*/}
-        <Button
-          title="Go to Details"
-          onPress={() => this.props.navigation.navigate('Details')}
-        /> 
-      </View>
-    );
-  }
-}
-
-class SettingsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Plan 4!</Text>
-        {/* <Button
-          title="Go to Plan 3"
-          onPress={() => this.props.navigation.navigate('Plan 3')}
-        />*/}
-        <Button
-          title="Go to Details"
-          onPress={() => this.props.navigation.navigate('Details')}
-        /> 
-      </View>
-    );
-  }
-}
-
-class DetailsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Details!</Text>
-      </View>
-    );
-  }
-}
-
 const HomeStack = createStackNavigator({
-  Home: { screen: HomeScreen, navigationOptions:  {
+  Home: { screen: plan3, navigationOptions:  {
     title: 'Plan 3'
 } },
-  Details: { screen: DetailsScreen, navigationOptions:  {
+  Details: { screen: details, navigationOptions:  {
     title: 'Detaljer'
 } },
 });
 
 const SettingsStack = createStackNavigator({
-  Settings: { screen: SettingsScreen, navigationOptions:  {
+  Settings: { screen: plan4, navigationOptions:  {
       title: 'Plan 4'
   } },
-  Details: { screen: DetailsScreen, navigationOptions:  {
+  Details: { screen: details, navigationOptions:  {
     title: 'Detaljer'
 } },
 });
