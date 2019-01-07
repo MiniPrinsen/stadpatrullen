@@ -1,6 +1,50 @@
+//import { DARESAY_SENSOR_API_PLAN3, DARESAY_SENSOR_API_PLAN4 } from 'react-native-dotenv';
+
+
 // The Cloud Functions for Firebase SDK to create Cloud Functions and setup triggers.
 const functions = require('firebase-functions');
+const fetch = require('node-fetch');
+const Client = require('node - rest - client').Client
+const BACKEND_URL = "https://daresay.herokuapp.com/nv/plan/4/all?key=41938416368104621"
 
+// The Firebase Admin SDK to access the Firebase Realtime Database.
+const admin = require('firebase-admin');
+admin.initializeApp();
+
+
+const client = new Client()
+exports.fetch = functions.https.onRequest((req, res) => {
+    client.get(BACKEND_URL, function (data, response) {
+
+      // TODO Clean up
+
+        return res.status(200)
+            .type('application / json')
+            .send(data)
+    })
+ }) 
+
+// exports.getSensordata = functions.https.onRequest((req, res) => {
+
+//     fetch('https://daresay.herokuapp.com/nv/plan/4/all?key=41938416368104621', {
+//         method: "GET",
+//     }).then(res =>{res.json()
+//         .then(res2 => {console.log(res2)})
+//     .catch(err => {console.log(err)})
+//     //const result = yield fetch(DARESAY_SENSOR_API_PLAN4)
+
+//     //const json = yield res.json();
+
+//     //console.log(json)
+//     //let data = req.body;
+//     //admin.database().ref('/sensors').push(data)
+
+//      // Check for POST request
+//     // if(req.method !== "POST") {
+//       //   res.status(400).send('Please send a POST request');
+//       //   return;
+//      //}
+//  });
 
 /*exports.fetchSensortData = functions.https.onRequest((req, res) => {
     let url = ''
@@ -39,24 +83,10 @@ const functions = require('firebase-functions');
 
 
 
- exports.request = functions.https.onRequest((req, res) => {
-
-    
-    let data = req.body;
-    admin.database().ref('/sensors').push(data)
-
-     // Check for POST request
-     if(req.method !== "POST") {
-         res.status(400).send('Please send a POST request');
-         return;
-     }
- })
 
 
 
-// The Firebase Admin SDK to access the Firebase Realtime Database.
-const admin = require('firebase-admin');
-admin.initializeApp();
+
 
 // Take the text parameter passed to this HTTP endpoint and insert it into the
 // Realtime Database under the path /messages/:pushId/original
