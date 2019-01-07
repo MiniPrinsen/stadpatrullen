@@ -1,6 +1,9 @@
 import React from 'react';
 import { Button, Text, View, FlatList, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import plan3 from "../screens/Plan3Screen";
+import plan4 from "../screens/Plan4Screen";
+import details from "../screens/DetailScreen";
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 class HomeScreen extends React.Component {
@@ -15,7 +18,7 @@ class HomeScreen extends React.Component {
   }
   componentDidMount(){
     
-    this.timer = setInterval(() => this.getPirCount(), 600000)}
+    this.timer = setInterval(() => this.getPirCount(), 1000)}
     
     async getPirCount(){
       fetch('https://daresay.herokuapp.com/nv/plan/4/sensor/4?key=41938416368104621',

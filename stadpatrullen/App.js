@@ -1,5 +1,5 @@
 import React from 'react';
-import Firebase from './Firebase';
+import db from './Firebase';
 import TabBarNavigation from './src/components/TabBarNavigation';
 
 export default class App extends React.Component {
@@ -7,7 +7,13 @@ export default class App extends React.Component {
 
   componentWillMount() {
     console.log("WOHOOOOOOO");
-    Firebase.init();
+    db.init();
+   // let reference = db.createRef();
+    //var test = reference.ref('/messages/');
+    //console.log(test);
+    
+    //let hej = Firebase.database().ref('zones/dSJu2oAssLXusFihAOBW/lastcleaned');
+    //console.log(hej);
   }
   render() {
     return (
