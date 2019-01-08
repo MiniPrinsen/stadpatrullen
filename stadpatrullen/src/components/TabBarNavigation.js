@@ -5,6 +5,7 @@ import plan3 from "../screens/Plan3Screen";
 import plan4 from "../screens/Plan4Screen";
 import details from "../screens/DetailScreen";
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import DetailScreen from '../screens/DetailScreen';
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -115,7 +116,7 @@ class HomeScreen extends React.Component {
         }
         
         const HomeStack = createStackNavigator({
-          Home: { screen: HomeScreen, navigationOptions:  {
+          Home: { screen: plan3, navigationOptions:  {
             title: 'Plan 3'
           } },
           Details: { screen: DetailsScreen, navigationOptions:  {
@@ -127,17 +128,17 @@ class HomeScreen extends React.Component {
           Settings: { screen: SettingsScreen, navigationOptions:  {
             title: 'Plan 4'
           } },
-          Details: { screen: DetailsScreen, navigationOptions:  {
+          Details: { screen: DetailScreen, navigationOptions:  {
             title: 'Detaljer'
           } },
         });
         
         export default createAppContainer(createBottomTabNavigator(
           {
-            Home: { screen: HomeStack, navigationOptions:  {
+            Home: { screen: plan3, navigationOptions:  {
               title: 'Plan 3'
             } },
-            Settings: { screen: SettingsStack, navigationOptions:  {
+            Settings: { screen: plan4, navigationOptions:  {
               title: 'Plan 4'
             } },
           },
