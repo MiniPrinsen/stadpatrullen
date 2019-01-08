@@ -1,7 +1,7 @@
 // Plan4.js
 
 import React from 'react';
-import { Button, Text, View, Image } from 'react-native';
+import { Alert, TouchableOpacity, Button, Text, View, Image } from 'react-native';
 import { StyleSheet } from 'react-native';
 
 
@@ -59,9 +59,33 @@ export default class Plan4Screen extends React.Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f0f0f0' }}>
       <Image style={styles.sunImage}source={require('../../assets/Sun.png')}/>
         <Text style={styles.headerText}>  NATURVETARHUSET</Text>
-        <View style={styles.zoneOnePlanFour}></View>
-        <View style={styles.zoneTwoPlanFour}></View>
-        <View style={styles.zoneThreePlanFour}></View>
+        <TouchableOpacity style={styles.zoneOnePlanFour} onPress={() => Alert.alert(
+          'Plan 4 Zon 1',
+          'Har du städat denna zon?',
+          [
+            {text: 'Avbryt', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'Ja', onPress: () => console.log('Ask me later pressed'), style: 'default'},
+          ],
+          { cancelable: false }
+        )}></TouchableOpacity>
+        <TouchableOpacity style={styles.zoneTwoPlanFour} onPress={() => Alert.alert(
+          'Plan 4 Zon 2',
+          'Har du städat denna zon?',
+          [
+            {text: 'Avbryt', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'Ja', onPress: () => console.log('Ask me later pressed'), style: 'default'},
+          ],
+          { cancelable: false }
+        )}></TouchableOpacity>
+        <TouchableOpacity style={styles.zoneThreePlanFour} onPress={() => Alert.alert(
+          'Plan 4 Zon 3',
+          'Har du städat denna zon?',
+          [
+            {text: 'Avbryt', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+            {text: 'Ja', onPress: () => console.log('Ask me later pressed'), style: 'default'},
+          ],
+          { cancelable: false }
+        )}></TouchableOpacity>
         <Text style={styles.planText}>Plan 4</Text>
         {/* <Button
           title="Go to Plan 4"
