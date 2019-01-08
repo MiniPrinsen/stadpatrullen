@@ -11,7 +11,7 @@ let styles = StyleSheet.create({
     zIndex: 0,
     position: 'absolute',
     resizeMode: 'cover', // or 'stretch'
-  }
+  },
 });
 
 export default class DetailScreen extends React.Component {
