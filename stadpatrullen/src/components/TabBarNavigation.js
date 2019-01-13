@@ -123,7 +123,7 @@ class HomeScreen extends React.Component {
         });
         
         const SettingsStack = createStackNavigator({
-          Settings: { screen: SettingsScreen, navigationOptions:  {
+          Settings: { screen: plan4, navigationOptions:  {
             title: 'Plan 4'
           } },
           Details: { screen: DetailsScreen, navigationOptions:  {

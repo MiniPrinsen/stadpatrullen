@@ -45,21 +45,52 @@ const styles = StyleSheet.create({
     width: 75,
     backgroundColor: "#76A5FF"
   },
-  zoneTwoPlanThree: {
+  zoneTwoPlanThreeBlack: {
     height: 100,
     width: 75,
     backgroundColor: "#909090",
     marginTop: "1%"
   },
-  zoneThreePlanThree: {
+  zoneTwoPlanThreeCleared: {
+    height: 100,
+    width: 75,
+    backgroundColor: "#76A5FF",
+    marginTop: "1%"
+  },
+  zoneThreePlanThreeBlack: {
     height: 100,
     width: 75,
     backgroundColor: "#707070",
     marginTop: "1%"
-  }
+  },
+  zoneThreePlanThreeCleared: {
+    height: 100,
+    width: 75,
+    backgroundColor: "#76A5FF",
+    marginTop: "1%"
+  },
 });
 
 var REQUEST_URL = "http://130.239.179.208:1337/getData?fbclid=IwAR0Syzq3lQFoUtXawsm3fx1YO4iYZNPWYhroG02Mebceqz4sTcQAMq3GmmE"
+var RESET_URL_CLEAN = 'http://130.239.179.208:1337/cleanedZone/';
+
+function getDirtynessColor(pirCounter) {
+  //console.log(pirCounter + "CPCPCPCP")
+  if( pirCounter <= 20) {
+    //console.log("hej jag är grön")
+    return "#76A5FF";
+    
+  } else if (pirCounter > 20 && pirCounter <= 50){
+    //console.log("hej jag är gul")
+    return "#5EFC8D"
+  } else if (pirCounter > 50 && pirCounter <= 100) {
+    return "#FCFF4B"
+  }
+  else {
+    //console.log("hej jag är röd")
+    return "#F85A3E";
+  }
+}
 
 export default class Plan3Screen extends React.Component {
 
@@ -78,7 +109,12 @@ export default class Plan3Screen extends React.Component {
       zone1DirtyNess: 0,
       zone2DirtyNess: 0,
       zone3DirtyNess: 0,
-
+      toggledButton: false,
+      toggledButton2: false,
+      zone1BackgroundColor: "#fff",
+      zone2BackgroundColor: "#fff",
+      zone3BackgroundColor: "#fff",
+      toggledButton3: false,    
     }
   }
 
@@ -138,30 +174,35 @@ export default class Plan3Screen extends React.Component {
       });
     }
   
+  cleanZone(id) {
+    fetch(RESET_URL_CLEAN + id, {method: 'GET'})
+    .then((response) => response.json())
+    .then((responseJson) => {
+      return (responseJson.dirtyness == 0);
+    });
+  }
   render() {
     const { 
       cloudImage, 
       zoneOnePlanThreeCleared, 
       zoneOnePlanThreeBlack,
+      zoneTwoPlanThreeCleared,
+      zoneTwoPlanThreeBlack,
+      zoneThreePlanThreeCleared,
+      zoneThreePlanThreeBlack,
       headerText
     } = styles
 
-    function getDirtynessColor(pirCounter) {
-      console.log(pirCounter + "CPCPCPCP")
-      if( pirCounter < 10) {
-        console.log("hej jag är grön")
-        return "green";
-        
-      } else if (pirCounter > 12){
-        console.log("hej jag är gul")
-        return "yellow"
-      }else {
-        console.log("hej jag är röd")
-        return "red";
-      }
-    }
-    const { toggledButton } = this.state
+    const { toggledButton, toggledButton2, toggledButton3, zone1BackgroundColor, zone2BackgroundColor, zone3BackgroundColor } = this.state
+    
+    
     let zoneOnePlanThree = toggledButton ? zoneOnePlanThreeCleared : zoneOnePlanThreeBlack
+    //zone1BackgroundColor = getDirtynessColor(this.state.totalVisitors)
+    let zoneTwoPlanThree = toggledButton2 ? zoneTwoPlanThreeCleared : zoneTwoPlanThreeBlack
+    //zone2BackgroundColor = getDirtynessColor(this.state.totalVisitors)
+    let zoneThreePlanThree = toggledButton3 ? zoneThreePlanThreeCleared : zoneThreePlanThreeBlack
+    //zone3BackgroundColor = getDirtynessColor(this.state.totalVisitors)
+  
 
     if(this.state.isLoading){
       return(
@@ -172,49 +213,78 @@ export default class Plan3Screen extends React.Component {
       }
 
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: getDirtynessColor(this.state.totalVisitors) }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f0f0f0' }}>
+
       <Image style={cloudImage} source={require('../../assets/Cloud.png')}/>
-        {console.log(this.state.totalVisitors = this.state.totalVisitors + this.state.dataSource)}
+
+      {console.log(this.state.totalVisitors = this.state.totalVisitors + this.state.dataSource)}
         {console.log(this.state.totalVisitors)}
         {console.log("JAG GILLAR GLASS:" + this.state.zone1DirtyNess)}
         {console.log(getDirtynessColor(this.state.totalVisitors))}
+      
         <Text style={headerText}>  NATURVETARHUSET</Text>
-        <TouchableOpacity style={zoneOnePlanThree
-} onPress={() => Alert.alert(
+        <Text>↑</Text>
+        <Text>MIT</Text>
+        <TouchableOpacity style={[zoneOnePlanThree, {backgroundColor: getDirtynessColor(this.state.zone1DirtyNess)}]} onPress={() => Alert.alert(
           'Plan 3 Zon 1',
           'Har du städat denna zon?',
           [
             {text: 'Avbryt', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'Ja', onPress: () => this.setState(prevState => ({
-              toggledButton: !prevState.toggledButton
-            })), style: 'default'},
+            {text: 'Ja', onPress: () => {
+              let zone_sensors = [0,1,2,3]
+              zone_sensors.forEach(index => {
+                this.cleanZone(index)
+              });
+              this.setState(prevState => ({
+                toggledButton: !prevState.toggledButton
+              }));
+
+            }, style: 'default'},
           ],
           { cancelable: false }
         )}></TouchableOpacity>
 
-
-
-
-
-
-        <TouchableOpacity style={styles.zoneTwoPlanThree} onPress={() => Alert.alert(
+        <TouchableOpacity style={[zoneTwoPlanThree, {backgroundColor: getDirtynessColor(this.state.zone2DirtyNess)}]} onPress={() => Alert.alert(
           'Plan 3 Zon 2',
           'Har du städat denna zon?',
           [
             {text: 'Avbryt', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'Ja', onPress: () => console.log('Ask me later pressed'), style: 'default'},
+            {text: 'Ja', onPress: () => {
+              let zone_sensors = [4,5,6]
+              zone_sensors.forEach(index => {
+                this.cleanZone(index)
+              });
+              this.setState(prevState => ({
+                toggledButton: !prevState.toggledButton
+              }));
+
+            }, style: 'default'},
           ],
           { cancelable: false }
         )}></TouchableOpacity>
-        <TouchableOpacity style={styles.zoneThreePlanThree} onPress={() => Alert.alert(
+
+        <TouchableOpacity style={[zoneThreePlanThree, {backgroundColor: getDirtynessColor(this.state.zone3DirtyNess)}]} onPress={() => Alert.alert(
           'Plan 3 Zon 3',
           'Har du städat denna zon?',
           [
             {text: 'Avbryt', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'Ja', onPress: () => console.log('Ask me later pressed'), style: 'default'},
+            {text: 'Ja', onPress: () => {
+              let zone_sensors = [7,8,9]
+              zone_sensors.forEach(index => {
+                this.cleanZone(index)
+              });
+              this.setState(prevState => ({
+                toggledButton: !prevState.toggledButton
+              }));
+
+            }, style: 'default'},
           ],
           { cancelable: false }
         )}></TouchableOpacity>
+
+        <Text>Biologi</Text>
+        <Text>↓</Text>
+
         <Text style={styles.planText}>Plan 3</Text>
         {/* <Button
           title="Go to Plan 4"
