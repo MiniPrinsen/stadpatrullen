@@ -45,18 +45,30 @@ const styles = StyleSheet.create({
     width: 75,
     backgroundColor: "#76A5FF"
   },
-  zoneTwoPlanThree: {
+  zoneTwoPlanThreeBlack: {
     height: 100,
     width: 75,
     backgroundColor: "#909090",
     marginTop: "1%"
   },
-  zoneThreePlanThree: {
+  zoneTwoPlanThreeCleared: {
+    height: 100,
+    width: 75,
+    backgroundColor: "#76A5FF",
+    marginTop: "1%"
+  },
+  zoneThreePlanThreeBlack: {
     height: 100,
     width: 75,
     backgroundColor: "#707070",
     marginTop: "1%"
-  }
+  },
+  zoneThreePlanThreeCleared: {
+    height: 100,
+    width: 75,
+    backgroundColor: "#76A5FF",
+    marginTop: "1%"
+  },
 });
 
 export default class Plan3Screen extends React.Component {
@@ -68,6 +80,8 @@ export default class Plan3Screen extends React.Component {
       dataSource: null,
       zoneColor: '#000',
       toggledButton: false,
+      toggledButton2: false,
+      toggledButton3: false,
     }
   }
 
@@ -76,16 +90,25 @@ export default class Plan3Screen extends React.Component {
       cloudImage, 
       zoneOnePlanThreeCleared, 
       zoneOnePlanThreeBlack,
+      zoneTwoPlanThreeCleared,
+      zoneTwoPlanThreeBlack,
+      zoneThreePlanThreeCleared,
+      zoneThreePlanThreeBlack,
       headerText
     } = styles
 
-    const { toggledButton } = this.state
+    const { toggledButton, toggledButton2, toggledButton3 } = this.state
     let zoneOnePlanThree = toggledButton ? zoneOnePlanThreeCleared : zoneOnePlanThreeBlack
+    let zoneTwoPlanThree = toggledButton2 ? zoneTwoPlanThreeCleared : zoneTwoPlanThreeBlack
+    let zoneThreePlanThree = toggledButton3 ? zoneThreePlanThreeCleared : zoneThreePlanThreeBlack
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f0f0f0' }}>
+
       <Image style={cloudImage} source={require('../../assets/Cloud.png')}/>
+      
         <Text style={headerText}>  NATURVETARHUSET</Text>
+
         <TouchableOpacity style={zoneOnePlanThree} onPress={() => Alert.alert(
           'Plan 3 Zon 1',
           'Har du städat denna zon?',
@@ -98,29 +121,30 @@ export default class Plan3Screen extends React.Component {
           { cancelable: false }
         )}></TouchableOpacity>
 
-
-
-
-
-
-        <TouchableOpacity style={styles.zoneTwoPlanThree} onPress={() => Alert.alert(
+        <TouchableOpacity style={zoneTwoPlanThree} onPress={() => Alert.alert(
           'Plan 3 Zon 2',
           'Har du städat denna zon?',
           [
             {text: 'Avbryt', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'Ja', onPress: () => console.log('Ask me later pressed'), style: 'default'},
+            {text: 'Ja', onPress: () => this.setState(prevState => ({
+              toggledButton2: !prevState.toggledButton2
+            })), style: 'default'},
           ],
           { cancelable: false }
         )}></TouchableOpacity>
-        <TouchableOpacity style={styles.zoneThreePlanThree} onPress={() => Alert.alert(
+
+        <TouchableOpacity style={zoneThreePlanThree} onPress={() => Alert.alert(
           'Plan 3 Zon 3',
           'Har du städat denna zon?',
           [
             {text: 'Avbryt', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'Ja', onPress: () => console.log('Ask me later pressed'), style: 'default'},
+            {text: 'Ja', onPress: () => this.setState(prevState => ({
+              toggledButton3: !prevState.toggledButton3
+            })), style: 'default'},
           ],
           { cancelable: false }
         )}></TouchableOpacity>
+
         <Text style={styles.planText}>Plan 3</Text>
         {/* <Button
           title="Go to Plan 4"
