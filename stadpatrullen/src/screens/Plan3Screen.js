@@ -103,10 +103,6 @@ export default class Plan3Screen extends React.Component {
 
 
 
-
-
-
-        
         <TouchableOpacity style={styles.zoneTwoPlanThree} onPress={() => Alert.alert(
           'Plan 3 Zon 2',
           'Har du städat denna zon?',
