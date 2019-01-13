@@ -178,6 +178,19 @@ export default class Plan3Screen extends React.Component {
     fetch(RESET_URL_CLEAN + id, {method: 'GET'})
     .then((response) => response.json())
     .then((responseJson) => {
+        if(id < 4) {
+          this.setState({
+            zone1DirtyNess: 0
+          })
+        } else if( id < 7 ) {
+            this.setState({
+              zone2DirtyNess: 0
+            })
+        } else {
+          this.setState({
+            zone3DirtyNess: 0
+          })
+        }
       return (responseJson.dirtyness == 0);
     });
   }
