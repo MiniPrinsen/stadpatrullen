@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
 });
 
 var REQUEST_URL = "Boobys"
+var RESET_URL = 'http://130.239.179.208:1337/cleanedZone/';
 
 function getDirtynessColor(pirCounter) {
   console.log(pirCounter + "CPCPCPCP")
@@ -129,7 +130,13 @@ export default class Plan3Screen extends React.Component {
         console.error(error);
       });
     }
-  
+  cleanZone(id) {
+    fetch(RESET_URL + id, {method: 'GET'})
+    .then((response) => response.json())
+    .then((responseJson) => {
+      return (responseJson.dirtyness == 0);
+    });
+  }
   render() {
     const { 
       cloudImage, 
@@ -177,9 +184,16 @@ export default class Plan3Screen extends React.Component {
           'Har du städat denna zon?',
           [
             {text: 'Avbryt', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'Ja', onPress: () => this.setState(prevState => ({
-              toggledButton: !prevState.toggledButton
-            })), style: 'default'},
+            {text: 'Ja', onPress: () => {
+              let zone_sensors = [0,1,2,3]
+              zone_sensors.forEach(index => {
+                this.cleanZone(index)
+              });
+              this.setState(prevState => ({
+                toggledButton: !prevState.toggledButton
+              }));
+
+            }, style: 'default'},
           ],
           { cancelable: false }
         )}></TouchableOpacity>
@@ -189,9 +203,16 @@ export default class Plan3Screen extends React.Component {
           'Har du städat denna zon?',
           [
             {text: 'Avbryt', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'Ja', onPress: () => this.setState(prevState => ({
-              toggledButton2: !prevState.toggledButton2
-            })), style: 'default'},
+            {text: 'Ja', onPress: () => {
+              let zone_sensors = [4,5,6]
+              zone_sensors.forEach(index => {
+                this.cleanZone(index)
+              });
+              this.setState(prevState => ({
+                toggledButton: !prevState.toggledButton
+              }));
+
+            }, style: 'default'},
           ],
           { cancelable: false }
         )}></TouchableOpacity>
@@ -201,9 +222,16 @@ export default class Plan3Screen extends React.Component {
           'Har du städat denna zon?',
           [
             {text: 'Avbryt', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-            {text: 'Ja', onPress: () => this.setState(prevState => ({
-              toggledButton3: !prevState.toggledButton3
-            })), style: 'default'},
+            {text: 'Ja', onPress: () => {
+              let zone_sensors = [7,8,9]
+              zone_sensors.forEach(index => {
+                this.cleanZone(index)
+              });
+              this.setState(prevState => ({
+                toggledButton: !prevState.toggledButton
+              }));
+
+            }, style: 'default'},
           ],
           { cancelable: false }
         )}></TouchableOpacity>
