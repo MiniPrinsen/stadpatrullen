@@ -7,8 +7,6 @@ import details from "../screens/DetailScreen";
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
 import { DARESAY_SENSOR_API_PLAN3_REAL } from 'react-native-dotenv'
 
-
-let REAL_API = 'http://130.239.179.208:1337/getData?fbclid=IwAR0Syzq3lQFoUtXawsm3fx1YO4iYZNPWYhroG02Mebceqz4sTcQAMq3GmmE';
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -41,6 +39,22 @@ class HomeScreen extends React.Component {
       });
     }
     
+    
+  
+  /*componentDidMount(){
+    return fetch('https://daresay.herokuapp.com/nv/plan/4/sensor/4?key=41938416368104621')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({
+        isLoading: false,
+        dataSource: responseJson[0].dd.pir
+      })
+      console.log(responseJson[0].dd)
+    })
+    .catch((error) =>{
+      console.error(error);
+    });
+  }*/
   
   
   render() {

@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   }
 });
 
-var REQUEST_URL = "Boobys"
+var REQUEST_URL = "http://130.239.179.208:1337/getData?fbclid=IwAR0Syzq3lQFoUtXawsm3fx1YO4iYZNPWYhroG02Mebceqz4sTcQAMq3GmmE"
 
 export default class Plan3Screen extends React.Component {
 
@@ -68,17 +68,24 @@ export default class Plan3Screen extends React.Component {
     this.state = {
       isLoading: true,
       dataSource: null,
+      dataSource2: null,
       zoneColor: '#000',
       toggledButton: false,
-      totalVisitors: 0
-    }
+      totalVisitors: 0,
+      sensor: '',
+      dityness: '',
+      list: [],
+      zone1DirtyNess: 0,
+      zone2DirtyNess: 0,
+      zone3DirtyNess: 0,
 
-    
+    }
   }
 
   componentDidMount(){
     
-    this.timer = setInterval(() => this.getPirCount(), 10000)}
+    this.timer = setInterval(() => this.getPirCount(), 10000),
+    this.timer = setInterval(() => this.getDirtynessEachSensor(), 10000)}
     
     async getPirCount(){
       fetch('https://daresay.herokuapp.com/nv/plan/3/sensor/4?key=41938416368104621',
@@ -90,6 +97,41 @@ export default class Plan3Screen extends React.Component {
           dataSource: responseJson[0].dd.pir
         })
         console.log(responseJson[0].dd)
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+    }
+
+    async getDirtynessEachSensor(){
+      fetch(REQUEST_URL, {method: "GET"})
+      .then((responce1) => responce1.json())
+      .then((responseHEu) => {
+        this.setState({
+          isLoading: false,
+          dataSource2: responseHEu,
+
+        })
+        responseHEu.forEach(element => {
+          console.log("HÄR ÄR JAG: " + element.dirtyness)
+          if(element.sensor <  4){
+            //this.setState(prevState => ({ count: prevState.count + 1 }))
+            this.setState(prevState => ({zone1DirtyNess: prevState.zone1DirtyNess + element.dirtyness}))
+            // this.setState({
+            //   zone1DirtyNess: element.dirtyness
+            // })
+            
+            console.log("LEEEEEEEEEEEROY: " + this.state.zone1DirtyNess)
+          }
+          else if (element.sensor < 7) {
+            this.setState(prevState => ({zone2DirtyNess: prevState.zone2DirtyNess + element.dirtyness}))
+          }
+          else{
+            this.setState(prevState => ({zone3DirtyNess: prevState.zone3DirtyNess + element.dirtyness}))
+          }
+        });
+        //console.log("KÖTT FYFAN:" + responseHEu[0].sensor + " " + "ALIBABA" +" "+ responseHEu[0].dirtyness )
+        //console.log("VALUE OF ZONE 1: " + this.zone1DirtyNess)
       })
       .catch((error) =>{
         console.error(error);
@@ -134,6 +176,7 @@ export default class Plan3Screen extends React.Component {
       <Image style={cloudImage} source={require('../../assets/Cloud.png')}/>
         {console.log(this.state.totalVisitors = this.state.totalVisitors + this.state.dataSource)}
         {console.log(this.state.totalVisitors)}
+        {console.log("JAG GILLAR GLASS:" + this.state.zone1DirtyNess)}
         {console.log(getDirtynessColor(this.state.totalVisitors))}
         <Text style={headerText}>  NATURVETARHUSET</Text>
         <TouchableOpacity style={zoneOnePlanThree
