@@ -73,6 +73,24 @@ const styles = StyleSheet.create({
 
 var REQUEST_URL = "Boobys"
 
+function getDirtynessColor(pirCounter) {
+  console.log(pirCounter + "CPCPCPCP")
+  if( pirCounter <= 20) {
+    console.log("hej jag är grön")
+    return "#76A5FF";
+    
+  } else if (pirCounter > 20 && pirCounter <= 50){
+    console.log("hej jag är gul")
+    return "green"
+  } else if (pirCounter > 50 && pirCounter <= 100) {
+    return "yellow"
+  }
+  else {
+    console.log("hej jag är röd")
+    return "red";
+  }
+}
+
 export default class Plan3Screen extends React.Component {
 
   constructor(props) {
@@ -80,9 +98,11 @@ export default class Plan3Screen extends React.Component {
     this.state = {
       isLoading: true,
       dataSource: null,
-      zoneColor: '#000',
       toggledButton: false,
       toggledButton2: false,
+      zone1BackgroundColor: "#fff",
+      zone2BackgroundColor: "#fff",
+      zone3BackgroundColor: "#fff",
       toggledButton3: false,
       totalVisitors: 0
     }
@@ -122,24 +142,16 @@ export default class Plan3Screen extends React.Component {
       headerText
     } = styles
 
-    const { toggledButton, toggledButton2, toggledButton3 } = this.state
-    function getDirtynessColor(pirCounter) {
-      console.log(pirCounter + "CPCPCPCP")
-      if( pirCounter < 10) {
-        console.log("hej jag är grön")
-        return "green";
-        
-      } else if (pirCounter > 12){
-        console.log("hej jag är gul")
-        return "yellow"
-      }else {
-        console.log("hej jag är röd")
-        return "red";
-      }
-    }
+    const { toggledButton, toggledButton2, toggledButton3, zone1BackgroundColor, zone2BackgroundColor, zone3BackgroundColor } = this.state
+    
+    
     let zoneOnePlanThree = toggledButton ? zoneOnePlanThreeCleared : zoneOnePlanThreeBlack
+    //zone1BackgroundColor = getDirtynessColor(this.state.totalVisitors)
     let zoneTwoPlanThree = toggledButton2 ? zoneTwoPlanThreeCleared : zoneTwoPlanThreeBlack
+    //zone2BackgroundColor = getDirtynessColor(this.state.totalVisitors)
     let zoneThreePlanThree = toggledButton3 ? zoneThreePlanThreeCleared : zoneThreePlanThreeBlack
+    //zone3BackgroundColor = getDirtynessColor(this.state.totalVisitors)
+  
 
     if(this.state.isLoading){
       return(
@@ -160,7 +172,7 @@ export default class Plan3Screen extends React.Component {
       
         <Text style={headerText}>  NATURVETARHUSET</Text>
 
-        <TouchableOpacity style={zoneOnePlanThree} onPress={() => Alert.alert(
+        <TouchableOpacity style={[zoneOnePlanThree, {backgroundColor: getDirtynessColor(this.state.totalVisitors)}]} onPress={() => Alert.alert(
           'Plan 3 Zon 1',
           'Har du städat denna zon?',
           [
@@ -172,7 +184,7 @@ export default class Plan3Screen extends React.Component {
           { cancelable: false }
         )}></TouchableOpacity>
 
-        <TouchableOpacity style={zoneTwoPlanThree} onPress={() => Alert.alert(
+        <TouchableOpacity style={[zoneTwoPlanThree, {backgroundColor: getDirtynessColor(this.state.totalVisitors)}]} onPress={() => Alert.alert(
           'Plan 3 Zon 2',
           'Har du städat denna zon?',
           [
@@ -184,7 +196,7 @@ export default class Plan3Screen extends React.Component {
           { cancelable: false }
         )}></TouchableOpacity>
 
-        <TouchableOpacity style={zoneThreePlanThree} onPress={() => Alert.alert(
+        <TouchableOpacity style={[zoneThreePlanThree, {backgroundColor: getDirtynessColor(this.state.totalVisitors)}]} onPress={() => Alert.alert(
           'Plan 3 Zon 3',
           'Har du städat denna zon?',
           [
