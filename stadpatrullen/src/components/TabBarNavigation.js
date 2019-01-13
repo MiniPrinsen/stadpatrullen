@@ -5,8 +5,10 @@ import plan3 from "../screens/Plan3Screen";
 import plan4 from "../screens/Plan4Screen";
 import details from "../screens/DetailScreen";
 import { createStackNavigator, createBottomTabNavigator, createAppContainer } from 'react-navigation';
-import DetailScreen from '../screens/DetailScreen';
+import { DARESAY_SENSOR_API_PLAN3_REAL } from 'react-native-dotenv'
 
+
+let REAL_API = 'http://130.239.179.208:1337/getData?fbclid=IwAR0Syzq3lQFoUtXawsm3fx1YO4iYZNPWYhroG02Mebceqz4sTcQAMq3GmmE';
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -24,7 +26,7 @@ class HomeScreen extends React.Component {
     this.timer = setInterval(() => this.getPirCount(), 10000)}
     
     async getPirCount(){
-      fetch('https://daresay.herokuapp.com/nv/plan/3/sensor/4?key=41938416368104621',
+      fetch(DARESAY_SENSOR_API_PLAN3_REAL,
       {method: "GET"})
       .then((response) => response.json())
       .then((responseJson) => {
@@ -39,22 +41,6 @@ class HomeScreen extends React.Component {
       });
     }
     
-    
-  
-  /*componentDidMount(){
-    return fetch('https://daresay.herokuapp.com/nv/plan/4/sensor/4?key=41938416368104621')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({
-        isLoading: false,
-        dataSource: responseJson[0].dd.pir
-      })
-      console.log(responseJson[0].dd)
-    })
-    .catch((error) =>{
-      console.error(error);
-    });
-  }*/
   
   
   render() {
@@ -71,9 +57,7 @@ class HomeScreen extends React.Component {
       }
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>{this.state.dataSource}</Text>
-        <Text>{this.state.totalVisitors = this.state.totalVisitors + this.state.dataSource}</Text>
-        {console.log(this.state.totalVisitors)}
+        
         {/* <Button
           title="Go to Plan 4"
           onPress={() => this.props.navigation.navigate('Plan 4')}
@@ -128,17 +112,17 @@ class HomeScreen extends React.Component {
           Settings: { screen: SettingsScreen, navigationOptions:  {
             title: 'Plan 4'
           } },
-          Details: { screen: DetailScreen, navigationOptions:  {
+          Details: { screen: DetailsScreen, navigationOptions:  {
             title: 'Detaljer'
           } },
         });
         
         export default createAppContainer(createBottomTabNavigator(
           {
-            Home: { screen: plan3, navigationOptions:  {
+            Home: { screen: HomeStack, navigationOptions:  {
               title: 'Plan 3'
             } },
-            Settings: { screen: plan4, navigationOptions:  {
+            Settings: { screen: SettingsStack, navigationOptions:  {
               title: 'Plan 4'
             } },
           },

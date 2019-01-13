@@ -1,7 +1,7 @@
 // Plan3.js
 
 import React from 'react';
-import { Alert, TouchableOpacity, Button, Text, View, Image } from 'react-native';
+import { Alert, TouchableOpacity, Button, Text, View, Image, ActivityIndicator } from 'react-native';
 import { StyleSheet } from 'react-native';
 
 
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   zoneOnePlanThreeBlack: {
     height: 100,
     width: 75,
-    backgroundColor: "black"
+    backgroundColor: "#000000"
   },
   zoneOnePlanThreeCleared: {
     height: 100,
@@ -59,6 +59,8 @@ const styles = StyleSheet.create({
   }
 });
 
+var REQUEST_URL = "Boobys"
+
 export default class Plan3Screen extends React.Component {
 
   constructor(props) {
@@ -68,9 +70,32 @@ export default class Plan3Screen extends React.Component {
       dataSource: null,
       zoneColor: '#000',
       toggledButton: false,
+      totalVisitors: 0
     }
+
+    
   }
 
+  componentDidMount(){
+    
+    this.timer = setInterval(() => this.getPirCount(), 10000)}
+    
+    async getPirCount(){
+      fetch('https://daresay.herokuapp.com/nv/plan/3/sensor/4?key=41938416368104621',
+      {method: "GET"})
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson[0].dd.pir
+        })
+        console.log(responseJson[0].dd)
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+    }
+  
   render() {
     const { 
       cloudImage, 
@@ -79,14 +104,40 @@ export default class Plan3Screen extends React.Component {
       headerText
     } = styles
 
+    function getDirtynessColor(pirCounter) {
+      console.log(pirCounter + "CPCPCPCP")
+      if( pirCounter < 10) {
+        console.log("hej jag är grön")
+        return "green";
+        
+      } else if (pirCounter > 12){
+        console.log("hej jag är gul")
+        return "yellow"
+      }else {
+        console.log("hej jag är röd")
+        return "red";
+      }
+    }
     const { toggledButton } = this.state
     let zoneOnePlanThree = toggledButton ? zoneOnePlanThreeCleared : zoneOnePlanThreeBlack
 
+    if(this.state.isLoading){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+        <ActivityIndicator/>
+        </View>
+        )
+      }
+
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f0f0f0' }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: getDirtynessColor(this.state.totalVisitors) }}>
       <Image style={cloudImage} source={require('../../assets/Cloud.png')}/>
+        {console.log(this.state.totalVisitors = this.state.totalVisitors + this.state.dataSource)}
+        {console.log(this.state.totalVisitors)}
+        {console.log(getDirtynessColor(this.state.totalVisitors))}
         <Text style={headerText}>  NATURVETARHUSET</Text>
-        <TouchableOpacity style={zoneOnePlanThree} onPress={() => Alert.alert(
+        <TouchableOpacity style={zoneOnePlanThree
+} onPress={() => Alert.alert(
           'Plan 3 Zon 1',
           'Har du städat denna zon?',
           [
