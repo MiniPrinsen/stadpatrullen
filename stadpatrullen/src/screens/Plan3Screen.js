@@ -1,7 +1,7 @@
 // Plan3.js
 
 import React from 'react';
-import { Alert, TouchableOpacity, Button, Text, View, Image } from 'react-native';
+import { Alert, TouchableOpacity, Button, Text, View, Image, ActivityIndicator } from 'react-native';
 import { StyleSheet } from 'react-native';
 
 
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   zoneOnePlanThreeBlack: {
     height: 100,
     width: 75,
-    backgroundColor: "black"
+    backgroundColor: "#000000"
   },
   zoneOnePlanThreeCleared: {
     height: 100,
@@ -71,6 +71,8 @@ const styles = StyleSheet.create({
   },
 });
 
+var REQUEST_URL = "Boobys"
+
 export default class Plan3Screen extends React.Component {
 
   constructor(props) {
@@ -82,9 +84,32 @@ export default class Plan3Screen extends React.Component {
       toggledButton: false,
       toggledButton2: false,
       toggledButton3: false,
+      totalVisitors: 0
     }
+
+    
   }
 
+  componentDidMount(){
+    
+    this.timer = setInterval(() => this.getPirCount(), 10000)}
+    
+    async getPirCount(){
+      fetch('https://daresay.herokuapp.com/nv/plan/3/sensor/4?key=41938416368104621',
+      {method: "GET"})
+      .then((response) => response.json())
+      .then((responseJson) => {
+        this.setState({
+          isLoading: false,
+          dataSource: responseJson[0].dd.pir
+        })
+        console.log(responseJson[0].dd)
+      })
+      .catch((error) =>{
+        console.error(error);
+      });
+    }
+  
   render() {
     const { 
       cloudImage, 
@@ -98,14 +123,40 @@ export default class Plan3Screen extends React.Component {
     } = styles
 
     const { toggledButton, toggledButton2, toggledButton3 } = this.state
+    function getDirtynessColor(pirCounter) {
+      console.log(pirCounter + "CPCPCPCP")
+      if( pirCounter < 10) {
+        console.log("hej jag är grön")
+        return "green";
+        
+      } else if (pirCounter > 12){
+        console.log("hej jag är gul")
+        return "yellow"
+      }else {
+        console.log("hej jag är röd")
+        return "red";
+      }
+    }
     let zoneOnePlanThree = toggledButton ? zoneOnePlanThreeCleared : zoneOnePlanThreeBlack
     let zoneTwoPlanThree = toggledButton2 ? zoneTwoPlanThreeCleared : zoneTwoPlanThreeBlack
     let zoneThreePlanThree = toggledButton3 ? zoneThreePlanThreeCleared : zoneThreePlanThreeBlack
+
+    if(this.state.isLoading){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+        <ActivityIndicator/>
+        </View>
+        )
+      }
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#f0f0f0' }}>
 
       <Image style={cloudImage} source={require('../../assets/Cloud.png')}/>
+
+      {console.log(this.state.totalVisitors = this.state.totalVisitors + this.state.dataSource)}
+        {console.log(this.state.totalVisitors)}
+        {console.log(getDirtynessColor(this.state.totalVisitors))}
       
         <Text style={headerText}>  NATURVETARHUSET</Text>
 
