@@ -85,7 +85,7 @@ export default class Plan4Screen extends React.Component {
 
   render() {
     const { 
-      cloudImage, 
+      sunImage, 
       zoneOnePlanFourCleared, 
       zoneOnePlanFourBlack,
       zoneTwoPlanFourCleared,
@@ -142,7 +142,7 @@ export default class Plan4Screen extends React.Component {
           ],
           { cancelable: false }
         )}></TouchableOpacity>
-        
+
         <Text style={styles.planText}>Plan 4</Text>
         {/* <Button
           title="Go to Plan 4"
